@@ -20,9 +20,9 @@ This repository aim to share **Arduino's** example sketch to develop
 - LoRa Gateway (ESP32) send data to [Favoriot](https://platform.favoriot.com/v2/signup) IoT Platform.
 
 ## Hardware Used in This Training
-- Arduino UNO [https://myduino.com/product/ard-006/](https://myduino.com/product/ard-006/)
-- Agriculture Kit ESP32 RS485 Industrial Grade Soil Sensor [https://myduino.com/product/agriculture-kit-esp32-lora-915-mhz-rs485-modbus-controller-with-industrial-grade-soil-temperature-humidity-ph-npk-sensor/](https://myduino.com/product/agriculture-kit-esp32-lora-915-mhz-rs485-modbus-controller-with-industrial-grade-soil-temperature-humidity-ph-npk-sensor/)
-- LoRa32 [https://myduino.com/product/tgo-006/](https://myduino.com/product/tgo-006/)
+- Arduino UNO [https://myduino.com](https://myduino.com/product/ard-006/)
+- Agriculture Kit ESP32 RS485 Industrial Grade Soil Sensor [https://myduino.com](https://myduino.com/product/agriculture-kit-esp32-lora-915-mhz-rs485-modbus-controller-with-industrial-grade-soil-temperature-humidity-ph-npk-sensor/)
+- LoRa32 [https://myduino.com](https://myduino.com/product/tgo-006/)
 
 The sketch require Arduino library.
 - [LoRa by Sandeep Mistry](https://github.com/sandeepmistry/arduino-LoRa)
