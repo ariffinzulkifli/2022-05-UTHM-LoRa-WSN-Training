@@ -1,7 +1,7 @@
 #include <SPI.h>
 #include <LoRa.h>
 
-// Makerfabs LoRa RS485 Pin Definition
+// TTGO LoRa32 Pin Definition
 #define SPI_MOSI            27
 #define SPI_MISO            19
 #define SPI_SCK             5
