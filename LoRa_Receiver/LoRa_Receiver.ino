@@ -1,7 +1,7 @@
 #include <SPI.h>
 #include <LoRa.h>
 
-// LoRa Module Pin Definition
+// Makerfabs LoRa RS485 Pin Definition
 #define SPI_MOSI            27
 #define SPI_MISO            19
 #define SPI_SCK             5
@@ -24,10 +24,16 @@ void setup() {
 
   Serial.println("LoRa Receiver");
 
-  if (!LoRa.begin(923E6)) {
-    Serial.println("Starting LoRa failed!");
-    while (1);
+  SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI, LORA_CS);
+  LoRa.setPins(LORA_CS, LORA_RST, LORA_DIO0);
+  
+  if (!LoRa.begin(LORA_FREQUENCY)) {
+    Serial.println("> Starting LoRa failed!");
+    while(1);
   }
+
+  // LoRa.setSyncWord(LORA_SYNC_WORD); // default 0x34
+  LoRa.setSpreadingFactor(LORA_SPREADING);
 }
 
 void loop() {
@@ -39,9 +45,11 @@ void loop() {
     Serial.print("Received packet '");
 
     // read packet
+    String packet;
     while (LoRa.available()) {
-      Serial.print((char)LoRa.read());
+      packet += (char)LoRa.read();
     }
+    Serial.print(packet);
 
     // print RSSI of packet
     Serial.print("' with RSSI ");

@@ -3,7 +3,7 @@
 
 int counter = 0;
 
-// LoRa Module Pin Definition
+// TTGO LoRa32 Pin Definition
 #define SPI_MOSI            13
 #define SPI_MISO            12
 #define SPI_SCK             14
