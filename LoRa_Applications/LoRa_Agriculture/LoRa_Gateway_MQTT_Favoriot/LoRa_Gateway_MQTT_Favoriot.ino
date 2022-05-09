@@ -2,8 +2,9 @@
 #include <LoRa.h>
 #include <WiFi.h>
 #include <MQTT.h>
+#include <Adafruit_SSD1306.h>
 
-// TTGO LoRa32 Pin Definition
+// TTGO LoRa32 Pins Definition
 #define SPI_MOSI            27
 #define SPI_MISO            19
 #define SPI_SCK             5
@@ -21,6 +22,13 @@
 #define LORA_PREAMBLE_LEN   8
 #define LORA_GAIN           0
 
+// TTGO LoRa32 OLED Definition
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+#define OLED_RESET     4
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 // Wi-Fi and Favoriot Credentials
 const char ssid[] = "YourSSID";
 const char password[] = "YourWiFiPassword";
@@ -35,6 +43,13 @@ MQTTClient mqtt(1024);
 unsigned long lastMillis = 0;
 
 void connectToWiFi() {
+  
+  Serial.println();
+  Serial.print("Initialize LoRa Gateway: ");
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) Serial.println(F("SSD1306 allocation failed"));
+  display.clearDisplay();
+  
   Serial.print("Connecting to Wi-Fi '" + String(ssid) + "' ...");
 
   WiFi.begin(ssid, password);
@@ -45,6 +60,29 @@ void connectToWiFi() {
   }
   
   Serial.println(" connected!");
+
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+  display.setCursor(0, 0);
+  display.print("Myinvent LoRa: ");
+  display.display();
+
+  SPI.begin(5, 19, 27, 18);
+  LoRa.setPins(18, 23, 26);
+
+  if (!LoRa.begin(923E6)) {
+    Serial.println("NOT OK");
+    display.println("NOT OK");
+    display.display();
+    while (1);
+  }
+
+  Serial.println("OK");
+  display.print("OK");
+
+  display.setCursor(0, 20);
+  display.print("Received Packet:");
+  display.display();
 }
 
 void messageReceived(String &topic, String &payload) {
@@ -126,6 +164,12 @@ void loop() {
     // print RSSI of packet
     Serial.print("' with RSSI ");
     Serial.println(LoRa.packetRssi());
+
+    display.setCursor(0, 30);
+    display.println("> " + packet);
+
+    display.print("> RSSI: " + String(LoRa.packetRssi())  + " dBm");
+    display.display();
 
     // publish a packet to Favoriot
     String favoriotJson = "{";
