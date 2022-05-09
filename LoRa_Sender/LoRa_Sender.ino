@@ -14,7 +14,7 @@ int counter = 0;
 #define LORA_DIO0           25
 #define LORA_DIO1           27
 
-#define LORA_FREQUENCY      923.0
+#define LORA_FREQUENCY      923E6
 #define LORA_BANDWIDTH      125.0
 #define LORA_SPREADING      7
 #define LORA_CODING_RATE    7
@@ -23,7 +23,7 @@ int counter = 0;
 #define LORA_GAIN           0
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   Serial.println("LoRa Sender");
 
